@@ -15,11 +15,13 @@ async function setup() {
   quadMap2 = pMapper.createQuadMap(400, 400, 20, 20);
   quadMap3 = pMapper.createQuadMap(800, 200, 20, 20);
   quadMap4 = pMapper.createQuadMap(400, 400, 20, 20);
+  quadMap5 = pMapper.createQuadMap(400, 400, 20, 20);
 
   squaresBuf = createGraphics(400, 400);
   walkersBuf = createGraphics(400, 400);
   flowersBuf = createGraphics(400, 200);
   flowersBuf.angleMode(DEGREES);
+  taylorsBuf = createGraphics(400, 200);
 
 
   solidColorBuf = createGraphics(400, 200);
@@ -42,6 +44,15 @@ async function setup() {
   for (let i = 0; i < 20; i++) {
     flowers.push(new Flower(random(flowersBuf.width), random(flowersBuf.height)));
   }
+
+
+  // Taylor's sketch setup
+  taylorsBuf.rectMode(CENTER);
+  taylorsBuf.angleMode(DEGREES);
+  taylorsBuf.colorMode(HSB);
+  taylorsBuf.noFill();
+  taylorsBuf.stroke(255);
+  taylorsBuf.frameRate(1);
 
 
  
