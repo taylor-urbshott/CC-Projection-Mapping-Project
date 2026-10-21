@@ -6,6 +6,8 @@ let guys = []
 let frames = []
 let flowers = []
 
+let lrpMouseX, lrpMouseY;
+let time = 0;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
@@ -47,12 +49,14 @@ async function setup() {
 
 
   // Taylor's sketch setup
+  taylorsBuf.createCanvas(windowWidth, windowHeight);
   taylorsBuf.rectMode(CENTER);
   taylorsBuf.angleMode(DEGREES);
   taylorsBuf.colorMode(HSB);
   taylorsBuf.noFill();
   taylorsBuf.stroke(255);
-  taylorsBuf.frameRate(1);
+  lrpMouseX = 0;
+  lrpMouseY = 0;
 
 
  
@@ -70,11 +74,13 @@ function draw() {
   walkers(walkersBuf)
   flowerField(flowersBuf)
   solidColor(solidColorBuf)
+  taylorsSketch(taylorsBuf)
 
   quadMap.displayTexture(squaresBuf);
   quadMap2.displayTexture(walkersBuf);
   quadMap3.displayTexture(flowersBuf);
   quadMap4.displayTexture(solidColorBuf);
+  quadMap5.displayTexture(taylorsBuf);
 
 }
 
@@ -118,33 +124,21 @@ function flowerField(pg) {
 }
 
 function taylorsSketch(pg) {
-  if (frameCt == 0) {
-    translate(width/2, height/2);
-  }
-  frameCt += frameCt;
-  if (frameCt < curveLen){
-    push()
-    translate(crvX[3], crvY[3]);
-    crvX[1] = crvX[3] - crvX[2];
-    crvY[1] = crvY[3] - crvY[2];
-    crvX[2] = random(-curveScale, curveScale);
-    crvY[2] = random(-curveScale, curveScale);
-    crvX[3] = random(-curveScale, curveScale);
-    crvY[3] = random(-curveScale, curveScale);
-    //bezier(crvX[0], crvY[0], crvX[1], crvY[1], crvX[2], crvY[2], crvX[3], crvY[3]);
-    line(crvX[0], crvY[0], crvX[3], crvY[3])
-    
-    
-  } else {
-    //pop();
-    translate(width/2, height/2);
-    curveCt ++;
-    frameCt = 0;
-    // finish draaw if all curves drawn
-    if (curveCt >= maxCt) {
-      return
+  pg.background(0, 50);
+  lrpMouseX = lerp(lrpMouseX, mouseX, 0.1);
+  lrpMouseY = lerp(lrpMouseY, mouseY, 0.1);
+  time += deltaTime;
+
+  pg.push();
+    pg.colortranslate(width/2, height/2);
+    for (let i = 0; i < (lrpMouseX / 50); i++) {
+      pg.stroke(i* 10, 100, 100);
+      pg.rotate(((height/2 - lrpMouseY)/20) + time/500);
+      pg.translate(lrpMouseY/40, lrpMouseY/30);
+      pg.scale(1.1);
+      pg.rect(0, 0, 100);
     }
-  }
+  pg.pop();
 }
 
 
