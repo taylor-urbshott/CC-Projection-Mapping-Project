@@ -23,7 +23,7 @@ async function setup() {
   walkersBuf = createGraphics(400, 400);
   flowersBuf = createGraphics(400, 200);
   flowersBuf.angleMode(DEGREES);
-  taylorsBuf = createGraphics(400, 200);
+  taylorsBuf = createGraphics(400, 400);
 
 
   solidColorBuf = createGraphics(400, 200);
@@ -49,7 +49,6 @@ async function setup() {
 
 
   // Taylor's sketch setup
-  taylorsBuf.createCanvas(windowWidth, windowHeight);
   taylorsBuf.rectMode(CENTER);
   taylorsBuf.angleMode(DEGREES);
   taylorsBuf.colorMode(HSB);
@@ -130,7 +129,7 @@ function taylorsSketch(pg) {
   time += deltaTime;
 
   pg.push();
-    pg.colortranslate(width/2, height/2);
+    pg.translate(200, 200);
     for (let i = 0; i < (lrpMouseX / 50); i++) {
       pg.stroke(i* 10, 100, 100);
       pg.rotate(((height/2 - lrpMouseY)/20) + time/500);
