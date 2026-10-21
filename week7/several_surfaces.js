@@ -1,6 +1,6 @@
 let pMapper
 let quadMap, quadMap2, quadMap3, quadMap4
-let squaresBuf, walkersBuf, flowersBuf, solidColorBuf
+let squaresBuf, walkersBuf, flowersBuf, hotpotBuf
 
 let guys = []
 let frames = []
@@ -22,7 +22,7 @@ async function setup() {
   flowersBuf.angleMode(DEGREES);
 
 
-  solidColorBuf = createGraphics(400, 200);
+  hotpotBuf = createGraphics(400, 400);
 
 
   //walkers initialization
@@ -58,12 +58,12 @@ function draw() {
   squares(squaresBuf);
   walkers(walkersBuf)
   flowerField(flowersBuf)
-  solidColor(solidColorBuf)
+  drawHotpot(hotpotBuf);
 
   quadMap.displayTexture(squaresBuf);
   quadMap2.displayTexture(walkersBuf);
   quadMap3.displayTexture(flowersBuf);
-  quadMap4.displayTexture(solidColorBuf);
+  quadMap4.displayTexture(hotpotBuf);
 
 }
 
