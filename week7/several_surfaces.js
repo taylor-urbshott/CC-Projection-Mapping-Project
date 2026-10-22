@@ -5,6 +5,12 @@ let squaresBuf, walkersBuf, flowersBuf, solidColorBuf
 let guys = []
 let frames = []
 let flowers = []
+// Yanyu's Moving Forest
+let forestBuf;
+let treeX = [];
+let treeHeights = [];
+let treeWidths = [];
+let treeSpeeds = [];
 
 let lrpMouseX, lrpMouseY;
 let time = 0;
@@ -13,7 +19,7 @@ async function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   pMapper = createProjectionMapper(this);
 
-  quadMap = pMapper.createQuadMap(400, 400, 20, 20);
+  quadMap = pMapper.createQuadMap(720, 480, 20, 20);
   quadMap2 = pMapper.createQuadMap(400, 400, 20, 20);
   quadMap3 = pMapper.createQuadMap(800, 200, 20, 20);
   quadMap4 = pMapper.createQuadMap(400, 400, 20, 20);
@@ -24,9 +30,26 @@ async function setup() {
   flowersBuf = createGraphics(400, 200);
   flowersBuf.angleMode(DEGREES);
   taylorsBuf = createGraphics(400, 400);
+  forestBuf = createGraphics(720, 480);
 
 
   solidColorBuf = createGraphics(400, 200);
+
+  
+  // Yanyu's forest initialization
+  for (let i = 0; i < 18; i++) {
+    treeX[i] = (i % 9) * 100 - 80;
+    treeHeights[i] = random(110, 190);
+    treeWidths[i] = random(60, 95);
+    treeSpeeds[i] = 0.6;
+
+    if (i >= 9) {
+      treeHeights[i] = random(160, 250);
+      treeWidths[i] = random(85, 120);
+      treeSpeeds[i] = 1.2;
+    }
+  }
+
 
 
   //walkers initialization
@@ -68,14 +91,13 @@ function draw() {
   background(0);
 
 
-
-  squares(squaresBuf);
+  forest(forestBuf);
   walkers(walkersBuf)
   flowerField(flowersBuf)
   solidColor(solidColorBuf)
   taylorsSketch(taylorsBuf)
 
-  quadMap.displayTexture(squaresBuf);
+  quadMap.displayTexture(forestBuf);
   quadMap2.displayTexture(walkersBuf);
   quadMap3.displayTexture(flowersBuf);
   quadMap4.displayTexture(solidColorBuf);
@@ -243,5 +265,66 @@ class Flower{
 
      }
     //  hi
+    
 
+}
+
+function forest(pg) {
+  pg.push();
+
+  pg.background(235, 245, 240);
+  pg.noStroke();
+
+  // Ground
+  pg.fill(163, 192, 137);
+  pg.rect(0, 340, pg.width, pg.height - 340);
+
+  // Draw trees
+  for (let i = 0; i < treeX.length; i++) {
+
+    let groundY = 355;
+    let leafColor = color(112, 157, 117);
+
+    // Front layer
+    if (i >= 9) {
+      groundY = 420;
+      leafColor = color(48, 112, 76);
+    }
+
+    let topY = groundY - treeHeights[i];
+
+    // Tree trunk
+    pg.fill(112, 83, 60);
+    pg.rect(
+      treeX[i] - 7,
+      topY + 35,
+      14,
+      treeHeights[i] - 35
+    );
+
+    // Lower leaves
+    pg.fill(leafColor);
+    pg.triangle(
+      treeX[i], topY,
+      treeX[i] - treeWidths[i] / 2, groundY - 70,
+      treeX[i] + treeWidths[i] / 2, groundY - 70
+    );
+
+    // Upper leaves
+    pg.triangle(
+      treeX[i], topY - 25,
+      treeX[i] - treeWidths[i] / 2.5, groundY - 115,
+      treeX[i] + treeWidths[i] / 2.5, groundY - 115
+    );
+
+    // Tree movement
+    treeX[i] -= treeSpeeds[i];
+
+    // Loop trees back
+    if (treeX[i] < -100) {
+      treeX[i] += 900;
+    }
+  }
+
+  pg.pop();
 }
