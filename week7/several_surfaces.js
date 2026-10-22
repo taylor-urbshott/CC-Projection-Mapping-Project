@@ -34,6 +34,7 @@ async function setup() {
 
 
   hotpotBuf = createGraphics(400, 400);
+  initHotpot(hotpotBuf);
 
   
   // Yanyu's forest initialization
@@ -327,4 +328,8 @@ function forest(pg) {
   }
 
   pg.pop();
+}
+
+function mouseClicked() {
+  hotpotAddRandomFood();
 }
