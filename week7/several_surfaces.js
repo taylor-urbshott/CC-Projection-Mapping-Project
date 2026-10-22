@@ -1,6 +1,6 @@
 let pMapper
 let quadMap, quadMap2, quadMap3, quadMap4
-let squaresBuf, walkersBuf, flowersBuf, solidColorBuf
+let squaresBuf, walkersBuf, flowersBuf, hotpotBuf
 
 let guys = []
 let frames = []
@@ -33,7 +33,7 @@ async function setup() {
   forestBuf = createGraphics(720, 480);
 
 
-  solidColorBuf = createGraphics(400, 200);
+  hotpotBuf = createGraphics(400, 400);
 
   
   // Yanyu's forest initialization
@@ -94,13 +94,13 @@ function draw() {
   forest(forestBuf);
   walkers(walkersBuf)
   flowerField(flowersBuf)
-  solidColor(solidColorBuf)
+  drawHotpot(hotpotBuf);
   taylorsSketch(taylorsBuf)
 
   quadMap.displayTexture(forestBuf);
   quadMap2.displayTexture(walkersBuf);
   quadMap3.displayTexture(flowersBuf);
-  quadMap4.displayTexture(solidColorBuf);
+  quadMap4.displayTexture(hotpotBuf);
   quadMap5.displayTexture(taylorsBuf);
 
 }
