@@ -1,10 +1,17 @@
 let pMapper
-let quadMap, quadMap2, quadMap3, quadMap4
-let squaresBuf, walkersBuf, flowersBuf, solidColorBuf
+let quadMap, quadMap2, quadMap3, quadMap4, quadMap6
+let squaresBuf, walkersBuf, flowersBuf, solidColorBuf, MaggieBuf
 
 let guys = []
 let frames = []
 let flowers = []
+
+let Maggieframes = [];
+let Findex = 0;
+let speed = 8;
+
+let playing = true;
+
 
 
 async function setup() {
@@ -15,14 +22,50 @@ async function setup() {
   quadMap2 = pMapper.createQuadMap(400, 400, 20, 20);
   quadMap3 = pMapper.createQuadMap(800, 200, 20, 20);
   quadMap4 = pMapper.createQuadMap(400, 400, 20, 20);
+  quadMap6 = pMapper.createQuadMap(400, 400, 20, 20);
 
   squaresBuf = createGraphics(400, 400);
   walkersBuf = createGraphics(400, 400);
   flowersBuf = createGraphics(400, 200);
+  MaggieBuf = createGraphics(400, 400);
   flowersBuf.angleMode(DEGREES);
 
 
   solidColorBuf = createGraphics(400, 200);
+
+
+//Maggie's initialization
+  for (let i = 0; i<6; i++) {
+    let flower = createGraphics(300, 300);
+    flower.angleMode(DEGREES);
+    flower.clear();
+
+
+    flower.translate(150, 150);
+
+    flower.noStroke();
+
+    let petalLength = 15+i*11;
+    let petalWidth = 10+i*3;
+
+    flower.fill(255, 130, 175)
+
+    for (let p = 0; p<8; p++) {
+      flower.push();
+      flower.rotate(p*45);
+
+
+      flower.ellipse(0, -petalLength/2, petalWidth, petalLength);
+      flower.pop();
+
+
+    }
+
+    flower.fill(255, 205, 65);
+    flower.circle(0, 0, 26);
+
+    Maggieframes.push(flower);
+  }
 
 
   //walkers initialization
@@ -54,7 +97,7 @@ function draw() {
   background(0);
 
 
-
+  maggieFlower(MaggieBuf);
   squares(squaresBuf);
   walkers(walkersBuf)
   flowerField(flowersBuf)
@@ -64,6 +107,7 @@ function draw() {
   quadMap2.displayTexture(walkersBuf);
   quadMap3.displayTexture(flowersBuf);
   quadMap4.displayTexture(solidColorBuf);
+  quadMap6.displayTexture(MaggieBuf);
 
 }
 
@@ -106,6 +150,46 @@ function flowerField(pg) {
   pg.pop();
 }
 
+function maggieFlower(pg) {
+
+  pg.push();
+  pg.background(0);
+
+  if (playing && frameCount % speed == 0) {
+
+    Findex++;
+
+    if (Findex >= Maggieframes.length) {
+      Findex = 0;
+    }
+  }
+
+  pg.imageMode(CENTER);
+
+  pg.image(
+    Maggieframes[Findex],
+    pg.width / 2,
+    pg.height / 2
+  );
+
+  pg.imageMode(CORNER);
+
+  pg.noStroke();
+  pg.fill(255);
+  pg.textAlign(CENTER, CENTER);
+  pg.textSize(15);
+
+  pg.text(
+    'Frame ' + (Findex + 1) +
+    ' / ' + Maggieframes.length +
+    '    Speed: ' + speed,
+    pg.width / 2,
+    pg.height / 2 + 175
+  );
+
+  pg.pop();
+}
+
 function taylorsSketch(pg) {
   if (frameCt == 0) {
     translate(width/2, height/2);
@@ -142,6 +226,21 @@ function keyPressed() {
   if (key === "s") pMapper.save("map.json");
   if (key === "l") pMapper.load("maps/map.json");
   if (key === "f") fullscreen(!fullscreen()); 
+  if (keyCode == LEFT_ARROW) {
+    speed = min(speed + 2, 30);
+    return false;
+  }
+
+  if (keyCode == RIGHT_ARROW) {
+    speed = max(speed - 2, 2);
+    return false;
+  }
+
+  if (key == ' ') {
+    playing = !playing;
+    return false;
+  }
+
 }
 
 function windowResized() {
@@ -238,6 +337,6 @@ class Flower{
         pg.pop()
 
      }
-    //  hi
+
 
 }
