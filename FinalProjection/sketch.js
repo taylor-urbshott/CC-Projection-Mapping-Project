@@ -30,11 +30,11 @@ function draw() {
 }
 
 function taylorsSketch(pg) {
-  pg.background(356,100,50);
+  pg.background(356,100,100);
   time += deltaTime;
 
   pg.push();
-    pg.translate(200, 200);
+    pg.translate(300, 300);
     for (let i = 0; i < (width / 30); i++) {
       pg.stroke(0, 0, 100-(i*12*noise(i*(time/200))));
       pg.strokeWeight(0.5*noise(0.6*(i+time/100)));
