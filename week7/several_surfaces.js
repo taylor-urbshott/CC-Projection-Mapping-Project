@@ -2,15 +2,15 @@ let pMapper
 let quadMap, quadMap2, quadMap3, quadMap4
 let squaresBuf, walkersBuf, flowersBuf, hotpotBuf
 
-let guys = []
-let frames = []
-let flowers = []
-// Yanyu's Moving Forest
-let forestBuf;
-let treeX = [];
-let treeHeights = [];
-let treeWidths = [];
-let treeSpeeds = [];
+// let guys = []
+// let frames = []
+// let flowers = []
+// // Yanyu's Moving Forest
+// let forestBuf;
+// let treeX = [];
+// let treeHeights = [];
+// let treeWidths = [];
+// let treeSpeeds = [];
 
 let lrpMouseX, lrpMouseY;
 let time = 0;
@@ -30,7 +30,7 @@ async function setup() {
   // walkersBuf = createGraphics(400, 400);
   // flowersBuf = createGraphics(400, 200);
   // flowersBuf.angleMode(DEGREES);
-  taylorsBuf = createGraphics(400, 400);
+  taylorsBuf = createGraphics(1200, 1200);
   // forestBuf = createGraphics(720, 480);
 
 
@@ -38,7 +38,7 @@ async function setup() {
   // initHotpot(hotpotBuf);
 
   
-  // Yanyu's forest initialization
+  //Yanyu's forest initialization
   // for (let i = 0; i < 18; i++) {
   //   treeX[i] = (i % 9) * 100 - 80;
   //   treeHeights[i] = random(110, 190);
@@ -54,7 +54,7 @@ async function setup() {
 
 
 
-  //walkers initialization
+  // walkers initialization
 
   // for (let i = 1; i <= 12; i++) {
   //   frames.push(await loadImage("walk_cycle_png_sequence/" + i + ".png"));
@@ -66,64 +66,64 @@ async function setup() {
   //     walkersBuf);
   // }
 
-  //flowers initialization
+  // flowers initialization
 
   // for (let i = 0; i < 20; i++) {
   //   flowers.push(new Flower(random(flowersBuf.width), random(flowersBuf.height)));
   // }
 
 
-  // // Taylor's sketch setup
-  // taylorsBuf.rectMode(CENTER);
-  // taylorsBuf.angleMode(DEGREES);
-  // taylorsBuf.colorMode(HSB);
-  // taylorsBuf.noFill();
-  // taylorsBuf.stroke(255);
-  // lrpMouseX = 0;
-  // lrpMouseY = 0;
+  // Taylor's sketch setup
+  taylorsBuf.rectMode(CENTER);
+  taylorsBuf.angleMode(DEGREES);
+  taylorsBuf.colorMode(HSB);
+  taylorsBuf.noFill();
+  taylorsBuf.stroke(255);
+  lrpMouseX = 0;
+  lrpMouseY = 0;
 
 
  
  
 
-//   pMapper.load("maps/map.json");
-// }
+  pMapper.load("maps/map.json");
+}
 
-// function draw() {
-//   background(0);
-
-
-//   forest(forestBuf);
-//   walkers(walkersBuf)
-//   flowerField(flowersBuf)
-//   drawHotpot(hotpotBuf);
-//   taylorsSketch(taylorsBuf)
-
-//   // quadMap.displayTexture(forestBuf);
-//   // quadMap2.displayTexture(walkersBuf);
-//   // quadMap3.displayTexture(flowersBuf);
-//   // quadMap4.displayTexture(hotpotBuf);
-//   // quadMap5.displayTexture(taylorsBuf);
-//   bezMap1.displayTexture(taylorsBuf, 0, 0, 1000, 1000);
-
-// }
+function draw() {
+  background(0);
 
 
-// function solidColor(pg){
-//   pg.push()
-//   pg.colorMode(HSB)
-//   pg.background(frameCount%360, 100,100,100)
-//   pg.pop()
-// }
+  // forest(forestBuf);
+  // walkers(walkersBuf)
+  // flowerField(flowersBuf)
+  // drawHotpot(hotpotBuf);
+  taylorsSketch(taylorsBuf)
 
-// function squares(pg) {
-//   pg.push();
-//   pg.background(255, 100, 100, 10);
-//   pg.noStroke();
-//   pg.fill(0, 100, 200);
-//   pg.rect(random(pg.width), random(pg.height), 100);
-//   pg.pop();
-// }
+  // quadMap.displayTexture(forestBuf);
+  // quadMap2.displayTexture(walkersBuf);
+  // quadMap3.displayTexture(flowersBuf);
+  // quadMap4.displayTexture(hotpotBuf);
+  // quadMap5.displayTexture(taylorsBuf);
+  bezMap1.displayTexture(taylorsBuf, 0, 0, 1600, 1600);
+
+}
+
+
+function solidColor(pg){
+  pg.push()
+  pg.colorMode(HSB)
+  pg.background(frameCount%360, 100,100,100)
+  pg.pop()
+}
+
+function squares(pg) {
+  pg.push();
+  pg.background(255, 100, 100, 10);
+  pg.noStroke();
+  pg.fill(0, 100, 200);
+  pg.rect(random(pg.width), random(pg.height), 100);
+  pg.pop();
+}
 
 
 // function walkers(pg) {
@@ -147,35 +147,35 @@ async function setup() {
 //   pg.pop();
 // }
 
-// function taylorsSketch(pg) {
-//   pg.background(0, 50);
-//   lrpMouseX = lerp(lrpMouseX, mouseX, 0.1);
-//   lrpMouseY = lerp(lrpMouseY, mouseY, 0.1);
-//   time += deltaTime;
+function taylorsSketch(pg) {
+  pg.background(0, 50);
+  lrpMouseX = lerp(lrpMouseX, mouseX, 0.1);
+  lrpMouseY = lerp(lrpMouseY, mouseY, 0.1);
+  time += deltaTime;
 
-//   pg.push();
-//     pg.translate(200, 200);
-//     for (let i = 0; i < (lrpMouseX / 50); i++) {
-//       pg.stroke(i* 10, 100, 100);
-//       pg.rotate(((height/2 - lrpMouseY)/20) + time/500);
-//       pg.translate(lrpMouseY/40, lrpMouseY/30);
-//       pg.scale(1.1);
-//       pg.rect(0, 0, 100);
-//     }
-//   pg.pop();
-// }
+  pg.push();
+    pg.translate(200, 200);
+    for (let i = 0; i < (lrpMouseX / 50); i++) {
+      pg.stroke(i* 10, 100, 100);
+      pg.rotate(((height/2 - lrpMouseY)/20) + time/500);
+      pg.translate(lrpMouseY/40, lrpMouseY/30);
+      pg.scale(1.1);
+      pg.rect(0, 0, 100);
+    }
+  pg.pop();
+}
 
 
-// function keyPressed() {
-//   if (key === "c") pMapper.toggleCalibration();
-//   if (key === "s") pMapper.save("map.json");
-//   if (key === "l") pMapper.load("maps/map.json");
-//   if (key === "f") fullscreen(!fullscreen()); 
-// }
+function keyPressed() {
+  if (key === "c") pMapper.toggleCalibration();
+  if (key === "s") pMapper.save("map.json");
+  if (key === "l") pMapper.load("maps/map.json");
+  if (key === "f") fullscreen(!fullscreen()); 
+}
 
-// function windowResized() {
-//   resizeCanvas(windowWidth, windowHeight);
-// }
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 
 
 
@@ -334,4 +334,4 @@ async function setup() {
 
 // function mouseClicked() {
 //   hotpotAddRandomFood();
-//
+// }
