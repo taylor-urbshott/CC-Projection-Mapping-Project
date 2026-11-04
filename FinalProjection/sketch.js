@@ -15,6 +15,7 @@ let speed = 8;
 let playing = true;
 let glitchOn = true;
 let flowerSize = 1.5;
+let position;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
@@ -26,7 +27,7 @@ async function setup() {
   taylorsBuf = createGraphics(1200, 1200);
 
   maggiesBezMap = pMapper.createBezierMap(4);
-  maggiesBuf = createGraphics(600, 600);
+  maggiesBuf = createGraphics(1200, 1200);
   maggiesBuf.pixelDensity(1)
 
 
@@ -41,7 +42,7 @@ async function setup() {
 
   // Maggie's sketch setup
   for (let i = 0; i<6; i++) {
-    let flower = createGraphics(300, 300);
+    let flower = createGraphics(100, 100);
     flower.angleMode(DEGREES);
     flower.clear();
 
@@ -63,19 +64,28 @@ async function setup() {
 
       flower.fill(90, 15, 25)
 
+      // Outer petal: vertex() is the anchor, then 3 points per cubic curve (p5 2.x syntax)
       flower.beginShape();
       flower.vertex(0, 8);
-      flower.bezierVertex(-w*1.5, -len*0.2, -w, -len*0.8, 0, -len);
-      flower.bezierVertex(w, -len*0.8, w*1.5, -len*0.2, 0, 8);
+      flower.bezierVertex(-w * 1.5, -len * 0.2);
+      flower.bezierVertex(-w, -len * 0.8);
+      flower.bezierVertex(0, -len);
+      flower.bezierVertex(w, -len * 0.8);
+      flower.bezierVertex(w * 1.5, -len * 0.2);
+      flower.bezierVertex(0, 8);
       flower.endShape(CLOSE);
-
 
       flower.fill(160, 45, 55)
 
+      // Inner petal
       flower.beginShape();
       flower.vertex(0, 0);
-      flower.bezierVertex(-w*0.8, -len*0.2, -w*0.5, -len*0.7, 0, -len*0.85);
-      flower.bezierVertex(w*0.5, -len*0.7, w*0.8, -len*0.2, 0, 0);
+      flower.bezierVertex(-w * 0.8, -len * 0.2);
+      flower.bezierVertex(-w * 0.5, -len * 0.7);
+      flower.bezierVertex(0, -len * 0.85);
+      flower.bezierVertex(w * 0.5, -len * 0.7);
+      flower.bezierVertex(w * 0.8, -len * 0.2);
+      flower.bezierVertex(0, 0);
       flower.endShape(CLOSE);
 
 
